@@ -6,19 +6,8 @@ class MovieRepo():
     collection = MovieCollection.collection
 
     @staticmethod
-    def get_imdb_data():
-        movies = MovieRepo.get_all()
-        titles = map(lambda movie: movie['title'], movies)
-        ratings = map(lambda movie: movie['imdbRating'], movies)
-
-        return {
-            'labels': list(titles),
-            'data': list(ratings)
-        }
-
-    @staticmethod
-    def get_all():
-        data = MovieRepo.collection.find({})
+    def get_movies(filter={}):
+        data = MovieRepo.collection.find(filter)
         movies = map(Movie.map_movie, data)
 
         return list(movies)
@@ -29,3 +18,7 @@ class MovieRepo():
         movie = Movie.map_movie(data)
 
         return movie
+
+    @staticmethod
+    def get_genres():
+        return MovieCollection.genres

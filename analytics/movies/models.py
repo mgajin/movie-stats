@@ -6,5 +6,5 @@ class Movie():
             'title': movie['title'],
             'rating': movie['rating'],
             'imdbRating': movie['imdbRating'],
-            # 'poster': movie['poster']
+            'genre': movie['genre']
         }

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block javascript %}
+<script>
+    let genres = []
+    let count = []
+    const endpoint = '/movies/genres'
+
+    $.ajax({
+        method: 'GET',
+        url: endpoint,
+        success: (response) => {
+            count = response.data
+            genres = response.labels
+            const ctx = document.getElementById('genresChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: genres,
+                    datasets: [{
+                        data: count,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(255, 159, 64, 0.5)',
+                            'rgba(25, 206, 86, 0.5)',
+                            'rgba(75, 12, 192, 0.5)',
+                            'rgba(153, 102, 135, 0.5)',
+                            'rgba(185, 19, 62, 0.5)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Genres',
+                        fontSize: 25
+                    },
+                    legend: {
+                        display: true,
+                        position: 'right'
+                    }
+                }
+            })
+        },
+        error: (error) => {
+            alert(error)
+        }
+    })
+</script>
+{% endblock %}
+
+{% block content %}
+
+<canvas id="genresChart" width="600" height="300"></canvas>
+
+{% endblock %}
