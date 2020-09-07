@@ -10,4 +10,8 @@ def get_movies(request):
     for movie in data:
         print(movie)
 
-    return JsonResponse({})
+    context = {
+        'success': True
+    }
+
+    return JsonResponse(context)

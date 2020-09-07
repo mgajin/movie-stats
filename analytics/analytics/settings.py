@@ -33,6 +33,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'movies.apps.MoviesConfig',
+    'users',
+    'charts',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
