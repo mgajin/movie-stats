@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from .models import MovieModel
+from .repository import MovieRepo
 
 
 def get_movies(request):
 
-    data = MovieModel.get_all()
+    data = MovieRepo.get_all()
 
     for movie in data:
         print(movie)
