@@ -4,5 +4,7 @@ class Movie():
     def map_movie(movie):
         return {
             'title': movie['title'],
-            'rating': movie['rating']
+            'rating': movie['rating'],
+            'imdbRating': movie['imdbRating'],
+            # 'poster': movie['poster']
         }

@@ -19,3 +19,7 @@ def get_movie(request):
     }
 
     return JsonResponse(response)
+
+
+def imdb_ratings(request):
+    return JsonResponse(MovieRepo.get_imdb_data())

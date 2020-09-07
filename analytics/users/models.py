@@ -1,3 +1,7 @@
-from django.db import models
+class User():
 
-# Create your models here.
+    @staticmethod
+    def map_user(user):
+        return {
+            'username': user['username']
+        }

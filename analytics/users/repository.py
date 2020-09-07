@@ -1,4 +1,5 @@
 from . import UserCollection
+from .models import User
 
 
 class UserRepo():
@@ -6,4 +7,7 @@ class UserRepo():
 
     @staticmethod
     def get_all():
-        return UserRepo.collection.find({})
+        data = UserRepo.collection.find({})
+        users = map(User.map_user, data)
+
+        return list(users)

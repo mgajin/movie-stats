@@ -4,4 +4,5 @@ from . import views
 
 urlpatterns = [
     path('', views.get_movies),
+    path('imdb', views.imdb_ratings)
 ]
