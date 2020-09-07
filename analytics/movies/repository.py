@@ -1,4 +1,5 @@
 from . import MovieCollection
+from .models import Movie
 
 
 class MovieRepo():
@@ -6,8 +7,14 @@ class MovieRepo():
 
     @staticmethod
     def get_all():
-        return MovieRepo.collection.find({})
+        data = MovieRepo.collection.find({})
+        movies = map(Movie.map_movie, data)
+
+        return list(movies)
 
     @staticmethod
     def get_movie(title):
-        return MovieRepo.collection.find_one({'title': title})
+        data = MovieRepo.collection.find_one({'title': title})
+        movie = Movie.map_movie(data)
+
+        return movie

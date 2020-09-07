@@ -4,14 +4,18 @@ from .repository import MovieRepo
 
 
 def get_movies(request):
-
-    data = MovieRepo.get_all()
-
-    for movie in data:
-        print(movie)
-
-    context = {
-        'success': True
+    movies = MovieRepo.get_all()
+    response = {
+        'movies': movies
     }
 
-    return JsonResponse(context)
+    return JsonResponse(response)
+
+
+def get_movie(request):
+    movie = MovieRepo.get_movie('Legend')
+    response = {
+        'movie': movie
+    }
+
+    return JsonResponse(response)
