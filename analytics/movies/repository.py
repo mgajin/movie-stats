@@ -15,6 +15,7 @@ class MovieRepo():
     @staticmethod
     def get_movie(title):
         data = MovieRepo.collection.find_one({'title': title})
+        print(data)
         movie = Movie.map_movie(data)
 
         return movie

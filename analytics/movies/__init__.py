@@ -6,7 +6,7 @@ class MovieCollection():
     genres = [
         'Action',
         'Adventure',
-        'Asci-Fi',
+        'Sci-Fi',
         'Comedy',
         'Drama',
         'Thriller',

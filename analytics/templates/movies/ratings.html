@@ -5,7 +5,7 @@
     let ratings = []
     let titles = []
     $(document).ready(() => {
-        const endpoint = '/movies/imdb'
+        const endpoint = '/imdb'
         $.ajax({
             method: 'GET',
             url: endpoint,
@@ -47,14 +47,6 @@
                         },
                         legend: {
                             display: false,
-                            position: 'right'
-                        },
-                        scales: {
-                            xAxes: [{
-                                ticks: {
-                                    beginAtZero: false,
-                                }
-                            }]
                         }
                     }
                 })
@@ -69,6 +61,6 @@
 
 {% block content %}
 
-<canvas id="ratingsChart" width="700" height="500"></canvas>
+<canvas id="ratingsChart" width="400" height="400"></canvas>
 
 {% endblock %}
