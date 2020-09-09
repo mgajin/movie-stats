@@ -1,13 +1,24 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from django.views import View
 from .repository import MovieRepo
 from .forms import SearchMovie
 import numpy as np
 
 
-def index(response):
-    form = SearchMovie()
-    return render(response, 'pages/index.html', {'form': form})
+class HomeView(View):
+    def get(self, request):
+        return render(request, 'pages/index.html')
+
+
+class GenresView(View):
+    def get(self, request):
+        return render(request, 'pages/genres.html')
+
+
+class MoviesView(View):
+    def get(self, request):
+        return render(request, 'pages/movies.html')
 
 
 def get_movies(request):
@@ -26,9 +37,7 @@ def get_movies(request):
 
 def get_movie(request):
     movie = MovieRepo.get_movie('Legend')
-    response = {
-        'movie': movie
-    }
+    response = {'movie': movie}
 
     return JsonResponse(response)
 

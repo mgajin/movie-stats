@@ -1,25 +1,41 @@
 {% extends 'base.html' %}
 
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 p-2">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="ratingsChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
 {% block javascript %}
 <script>
-    let ratings = []
-    let titles = []
     $(document).ready(() => {
-        const endpoint = '/imdb'
+        const endpoint = '/charts/imdb'
         $.ajax({
             method: 'GET',
             url: endpoint,
             success: (response) => {
-                ratings = response.data
-                titles = response.labels
+                const {
+                    data,
+                    labels
+                } = response
                 const ctx = document.getElementById('ratingsChart').getContext('2d');
                 const chart = new Chart(ctx, {
                     type: 'horizontalBar',
                     data: {
-                        labels: titles,
+                        labels: labels,
                         datasets: [{
                             label: 'Rating',
-                            data: ratings,
+                            data: data,
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.5)',
                                 'rgba(54, 162, 235, 0.5)',
@@ -57,10 +73,4 @@
         })
     })
 </script>
-{% endblock %}
-
-{% block content %}
-
-<canvas id="ratingsChart" width="400" height="400"></canvas>
-
 {% endblock %}
