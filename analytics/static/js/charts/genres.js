@@ -1,4 +1,4 @@
-const endpoint = '/charts/genres'
+const endpoint = '/app/charts/genres'
 const bgColors = [
     'rgba(255, 99, 132, 0.5)',
     'rgba(54, 162, 235, 0.5)',

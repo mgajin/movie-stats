@@ -1,15 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views import View
 from .services import MovieService
 from .forms import SearchMovie
 
 service = MovieService()
-
-
-class HomeView(View):
-    def get(self, request):
-        return render(request, 'pages/index.html')
 
 
 class GenresView(View):
@@ -20,6 +15,15 @@ class GenresView(View):
 class MoviesView(View):
     def get(self, request):
         return render(request, 'pages/movies.html')
+
+
+class MovieView(View):
+    def get(self, request, title):
+        movie = service.get_movie(title)
+        if movie is None:
+            return redirect('/error/not-found')
+
+        return render(request, 'pages/movie.html', {'movie': movie})
 
 
 class RatingsChartView(View):

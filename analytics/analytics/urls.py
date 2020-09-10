@@ -5,5 +5,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('movies.urls')),
+    path('', include('pages.urls')),
+    path('app/', include('movies.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -15,9 +15,10 @@ class MovieRepo():
 
     def get_movie(self, title):
         data = self.collection.find_one({'title': title})
-        print(data)
-        movie = Movie.map_movie(data)
+        if data is None:
+            return None
 
+        movie = Movie.map_movie(data)
         return movie
 
     def get_genres(self):
