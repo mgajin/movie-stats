@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -24,64 +25,5 @@
 {% endblock %}
 
 {% block javascript %}
-<script>
-    $(document).ready(() => {
-        const endpoint = '/charts/genres'
-        bgColors = [
-            'rgba(255, 99, 132, 0.5)',
-            'rgba(54, 162, 235, 0.5)',
-            'rgba(255, 206, 86, 0.5)',
-            'rgba(75, 192, 192, 0.5)',
-            'rgba(153, 102, 255, 0.5)',
-            'rgba(255, 159, 64, 0.5)'
-        ]
-        $.ajax({
-            method: 'GET',
-            url: endpoint,
-            success: (response) => {
-                const {
-                    data,
-                    labels
-                } = response
-                const chartData = {
-                    labels: labels,
-                    datasets: [{
-                        data: data,
-                        backgroundColor: bgColors,
-                        borderWidth: 1
-                    }]
-                }
-                let ctx = document.getElementById('genresPieChart').getContext('2d')
-                const pieChart = new Chart(ctx, {
-                    type: 'pie',
-                    data: chartData,
-                    options: {
-                        title: {
-                            display: false,
-                            text: '',
-                            fontSize: 25
-                        },
-                        legend: {
-                            display: true,
-                            position: 'right'
-                        }
-                    }
-                })
-                cxt = document.getElementById('genresBarChart').getContext('2d')
-                const barChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: chartData,
-                    options: {
-                        legend: {
-                            display: false,
-                        }
-                    }
-                })
-            },
-            error: (error) => {
-                alert(error)
-            }
-        })
-    })
-</script>
+<script src="{% static 'js/charts/genres.js' %}"></script>
 {% endblock %}
