@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views import View
-from .repository import MovieRepo
+from .services import MovieService
 from .forms import SearchMovie
-import numpy as np
+
+service = MovieService()
 
 
 class HomeView(View):
@@ -21,52 +22,30 @@ class MoviesView(View):
         return render(request, 'pages/movies.html')
 
 
+class RatingsChartView(View):
+    def get(self, request):
+        chart_data = service.get_ratings_data()
+        return JsonResponse(chart_data)
+
+
+class GenresChartView(View):
+    def get(self, request):
+        chart_data = service.get_genres_data()
+        return JsonResponse(chart_data)
+
+
 def get_movies(request):
     form = SearchMovie(request.GET)
     if (form.is_valid()):
         title = form.cleaned_data['title']
-        movies = MovieRepo.get_movies({'title': title})
-
+        filter = {'title': title}
     else:
-        movies = MovieRepo.get_movies()
+        filter = {}
 
-    response = {'movies': movies}
-
-    return JsonResponse(response)
+    movies = service.get_movies(filter)
+    return JsonResponse({'movies': movies})
 
 
 def get_movie(request):
-    movie = MovieRepo.get_movie('Legend')
-    response = {'movie': movie}
-
-    return JsonResponse(response)
-
-
-def imdb_ratings(request):
-    movies = MovieRepo.get_movies()
-    titles = map(lambda movie: movie['title'], movies)
-    ratings = map(lambda movie: movie['imdbRating'], movies)
-
-    dataset = {
-        'labels': list(titles),
-        'data': list(ratings)
-    }
-
-    return JsonResponse(dataset)
-
-
-def genres_data(request):
-    genres = MovieRepo.get_genres()
-    data = np.arange(len(genres))
-    data.fill(0)
-
-    for i in range(len(genres)):
-        movies = MovieRepo.get_movies({'genre': genres[i]})
-        data[i] = len(movies)
-
-    dataset = {
-        'genres': genres,
-        'count': data.tolist()
-    }
-
-    return JsonResponse(dataset)
+    movie = service.get_movie('Legend')
+    return JsonResponse({'movie': movie})

@@ -3,23 +3,22 @@ from .models import Movie
 
 
 class MovieRepo():
-    collection = MovieCollection.collection
+    def __init__(self):
+        self.collection = MovieCollection.collection
+        self.genres = MovieCollection.genres
 
-    @staticmethod
-    def get_movies(filter={}):
-        data = MovieRepo.collection.find(filter)
+    def get_movies(self, filter={}):
+        data = self.collection.find(filter)
         movies = map(Movie.map_movie, data)
 
         return list(movies)
 
-    @staticmethod
-    def get_movie(title):
-        data = MovieRepo.collection.find_one({'title': title})
+    def get_movie(self, title):
+        data = self.collection.find_one({'title': title})
         print(data)
         movie = Movie.map_movie(data)
 
         return movie
 
-    @staticmethod
-    def get_genres():
-        return MovieCollection.genres
+    def get_genres(self):
+        return self.genres

@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.urls import path
-from . import views
+from .views import HomeView, MoviesView, GenresView, GenresChartView, RatingsChartView, get_movies
 
 urlpatterns = [
-    path('', views.HomeView.as_view()),
-    path('movies/', views.MoviesView.as_view()),
-    path('genres/', views.GenresView.as_view()),
-    # path('movies/<int:title>', views.get_movie),
-    path('charts/imdb', views.imdb_ratings),
-    path('charts/genres', views.genres_data)
+    path('', HomeView.as_view()),
+    path('movies/', MoviesView.as_view()),
+    # path('movies/<int:title>', views.MovieView.as_view()),
+    path('genres/', GenresView.as_view()),
+    path('charts/imdb', RatingsChartView.as_view()),
+    path('charts/genres', GenresChartView.as_view()),
+    path('api/movies', get_movies)
 ]
