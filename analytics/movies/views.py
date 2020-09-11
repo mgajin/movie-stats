@@ -7,14 +7,15 @@ from .forms import SearchMovie
 service = MovieService()
 
 
-class GenresView(View):
+class HomeView(View):
     def get(self, request):
-        return render(request, 'pages/genres.html')
-
-
-class MoviesView(View):
-    def get(self, request):
-        return render(request, 'pages/movies.html')
+        movies = service.get_movies()
+        genres = service.get_genres()
+        context = {
+            'total_movies': len(movies),
+            'total_genres': len(genres['labels'])
+        }
+        return render(request, 'pages/index.html', context)
 
 
 class MovieView(View):
@@ -34,7 +35,7 @@ class RatingsChartView(View):
 
 class GenresChartView(View):
     def get(self, request):
-        chart_data = service.get_genres_data()
+        chart_data = service.get_genres()
         return JsonResponse(chart_data)
 
 

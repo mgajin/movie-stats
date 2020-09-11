@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 p-2">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title text-center">Top 10 rated movies</h1>
+                <canvas id="ratingsChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="module" src="{% static '/js/charts/movies.js' %}"></script>
+{% endblock %}

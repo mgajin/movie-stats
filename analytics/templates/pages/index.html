@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
-<div class="container">
-    <h1>Home Page</h1>
+<div class="landing">
+    <div class="bg"></div>
 </div>
+
+<div class="container">
+    {% include 'partials/status_cards.html' %}
+    {% include 'charts/genres.html' %}
+    {% include 'charts/movies.html' %}
+</div>
+
+
 
 {% endblock %}
