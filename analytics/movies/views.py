@@ -28,7 +28,8 @@ class MovieView(View):
 
 class RatingsChartView(View):
     def get(self, request):
-        chart_data = service.get_ratings_data()
+        sorted = request.GET.get('sorted', '')
+        chart_data = service.get_top_rated() if sorted == 'True' else service.get_imdb_ratings()
         return JsonResponse(chart_data)
 
 
@@ -48,8 +49,3 @@ def get_movies(request):
 
     movies = service.get_movies(filter)
     return JsonResponse({'movies': movies})
-
-
-def get_movie(request):
-    movie = service.get_movie('Legend')
-    return JsonResponse({'movie': movie})

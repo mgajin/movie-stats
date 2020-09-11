@@ -7,19 +7,15 @@ class MovieService():
     def __init__(self):
         self.repository = MovieRepo()
 
-    def get_ratings_data(self):
+    def get_imdb_ratings(self):
         movies = self.repository.get_movies()
-        titles = map(lambda movie: movie['title'], movies)
-        ratings = map(lambda movie: movie['imdbRating'], movies)
+        return self.__get_dataset(movies, 'title', 'imdbRating')
 
-        dataset = {
-            'labels': list(titles),
-            'data': list(ratings)
-        }
+    def get_top_rated(self, n=10):
+        movies = self.repository.get_movies_sorted()
+        return self.__get_dataset(movies[:n], 'title', 'imdbRating')
 
-        return dataset
-
-    def get_genres_data(self):
+    def get_genres(self):
         genres = self.repository.get_genres()
         data = np.arange(len(genres))
         data.fill(0)
@@ -40,3 +36,8 @@ class MovieService():
 
     def get_movie(self, title):
         return self.repository.get_movie(title)
+
+    def __get_dataset(self, items, col_1, col_2):
+        labels = map(lambda item: item[col_1], items)
+        data = map(lambda item: item[col_2], items)
+        return {'labels': list(labels), 'data': list(data)}

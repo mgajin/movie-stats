@@ -13,10 +13,14 @@ class MovieRepo():
 
         return list(movies)
 
+    def get_movies_sorted(self, filter={}):
+        movies = self.get_movies(filter)
+        return sorted(movies, key=lambda movie: movie['imdbRating'], reverse=True)
+
     def get_movie(self, title):
         data = self.collection.find_one({'title': title})
         if data is None:
-            return None
+            return data
 
         movie = Movie.map_movie(data)
         return movie
