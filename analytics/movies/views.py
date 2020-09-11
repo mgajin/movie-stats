@@ -22,7 +22,6 @@ class MovieView(View):
         movie = service.get_movie(title)
         if movie is None:
             return redirect('/error/not-found')
-
         return render(request, 'pages/movie.html', {'movie': movie})
 
 
@@ -46,6 +45,5 @@ def get_movies(request):
         filter = {'title': title}
     else:
         filter = {}
-
     movies = service.get_movies(filter)
     return JsonResponse({'movies': movies})

@@ -19,17 +19,10 @@ class MovieService():
         genres = self.repository.get_genres()
         data = np.arange(len(genres))
         data.fill(0)
-
         for i in range(len(genres)):
-            movies = self.get_movies({'genre': genres[i]})
+            movies = self.repository.get_movies({'genre': genres[i]})
             data[i] = len(movies)
-
-        dataset = {
-            'labels': genres,
-            'data': data.tolist()
-        }
-
-        return dataset
+        return {'labels': genres, 'data': data.tolist()}
 
     def get_movies(self, filter={}):
         return self.repository.get_movies(filter)
