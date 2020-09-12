@@ -5,6 +5,7 @@ $(document).ready(() => init())
 function init() {
     ajax('/charts/months', dateChart)
     ajax('/charts/genres', genresChart)
+    ajax('/charts/genres/avg', avgRatingsChart)
     ajax('/charts/imdb?sorted=True', topRatedChart)
 }
 
@@ -18,6 +19,14 @@ function dateChart(response) {
 
 function genresChart(response) {
     const chart = getChart(context('genresChart'), 'pie', getData(response))
+}
+
+const avgRatingsChart = (response) => {
+    const chart = getChart(
+        context('avgRatingsChart'),
+        'verticalBar',
+        getData(response)
+    )
 }
 
 const topRatedChart = (response) => {
@@ -43,11 +52,4 @@ const getData = (response) => {
 
 const context = (id) => {
     return document.getElementById(id).getContext('2d')
-}
-
-const initChart = (response) => {
-    const { data, labels } = response
-    const chartData = { data, labels }
-    const ctx = document.getElementById('ratingsChart').getContext('2d')
-    const chart = getChart(ctx, 'horizontalBar', chartData)
 }

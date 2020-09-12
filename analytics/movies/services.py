@@ -25,6 +25,16 @@ class MovieService():
             data[i] = len(movies)
         return self.__response(genres, data.tolist())
 
+    def genres_avg_ratings(self):
+        genres = self.repository.get_genres()
+        data = np.arange(len(genres), dtype='f')
+        data.fill(0)
+        for i in range(len(genres)):
+            movies = self.repository.get_movies({'genre': genres[i]})
+            avg = self.__get_average(movies, 'imdbRating')
+            data[i] = avg
+        return self.__response(genres, data.tolist())
+
     def months_data(self):
         months = calendar.month_name[1:]
         data = np.arange(len(months))
@@ -39,6 +49,13 @@ class MovieService():
 
     def get_movie(self, title):
         return self.repository.get_movie(title)
+
+    def __get_average(self, items, col):
+        avg = 0
+        for item in items:
+            avg += item[col]
+        avg = float(avg) / len(items)
+        return round(avg, 2)
 
     def __get_dataset(self, items, col_1, col_2):
         labels = map(lambda item: item[col_1], items)

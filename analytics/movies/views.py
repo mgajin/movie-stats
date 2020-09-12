@@ -45,6 +45,12 @@ class GenresChartView(View):
         return JsonResponse(chart_data)
 
 
+class AvgRatingsView(View):
+    def get(self, request):
+        chart_data = service.genres_avg_ratings()
+        return JsonResponse(chart_data)
+
+
 def get_movies(request):
     form = SearchMovie(request.GET)
     if (form.is_valid()):
