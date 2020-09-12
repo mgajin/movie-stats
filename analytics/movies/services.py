@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from .repository import MovieRepo
 import numpy as np
+import calendar
 
 
 class MovieService():
@@ -22,7 +23,16 @@ class MovieService():
         for i in range(len(genres)):
             movies = self.repository.get_movies({'genre': genres[i]})
             data[i] = len(movies)
-        return {'labels': genres, 'data': data.tolist()}
+        return self.__response(genres, data.tolist())
+
+    def months_data(self):
+        months = calendar.month_name[1:]
+        data = np.arange(len(months))
+        data.fill(0)
+        for i in range(len(months)):
+            movies = self.repository.movies_by_month(months[i][:3])
+            data[i] = len(movies)
+        return self.__response(months, data.tolist())
 
     def get_movies(self, filter={}):
         return self.repository.get_movies(filter)
@@ -33,4 +43,7 @@ class MovieService():
     def __get_dataset(self, items, col_1, col_2):
         labels = map(lambda item: item[col_1], items)
         data = map(lambda item: item[col_2], items)
-        return {'labels': list(labels), 'data': list(data)}
+        return self.__response(list(labels), list(data))
+
+    def __response(self, labels, data):
+        return {'labels': labels, 'data': data}
