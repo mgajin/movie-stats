@@ -36,10 +36,7 @@ class RatingsChartView(View):
 class MonthsChartView(View):
     def get(self, request):
         form = YearFilter(request.GET)
-        if form.is_valid():
-            year = form.cleaned_data['year']
-        else:
-            year = ''
+        year = form.cleaned_data['year'] if form.is_valid() else ''
         chart_data = service.months_data(year)
         return JsonResponse(chart_data)
 
@@ -58,7 +55,7 @@ class AvgRatingsView(View):
 
 def get_movies(request):
     form = SearchMovie(request.GET)
-    if (form.is_valid()):
+    if form.is_valid():
         title = form.cleaned_data['title']
         filter = {'title': title}
     else:
