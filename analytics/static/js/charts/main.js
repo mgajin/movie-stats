@@ -20,7 +20,13 @@ const pieChart = (ctx, chartData) => {
             position: 'right',
         },
     }
-    return makeChart(ctx, 'pie', chartData, options)
+    const labels = chartData.labels
+    const dataset = {
+        data: chartData.data,
+        backgroundColor: backgrounds,
+        borderWidth: 1,
+    }
+    return makeChart(ctx, 'pie', labels, dataset, options)
 }
 
 const verticalBarChart = (ctx, chartData) => {
@@ -29,16 +35,22 @@ const verticalBarChart = (ctx, chartData) => {
             display: false,
         },
         scales: {
+            xAxes: [{ gridLines: { drawOnChartArea: false } }],
             yAxes: [
                 {
-                    ticks: {
-                        beginAtZero: true,
-                    },
+                    ticks: { beginAtZero: true },
+                    gridLines: { drawOnChartArea: false },
                 },
             ],
         },
     }
-    return makeChart(ctx, 'bar', chartData, options)
+    const labels = chartData.labels
+    const dataset = {
+        data: chartData.data,
+        backgroundColor: backgrounds,
+        borderWidth: 1,
+    }
+    return makeChart(ctx, 'bar', labels, dataset, options)
 }
 
 const horizontalBarChart = (ctx, chartData) => {
@@ -49,14 +61,20 @@ const horizontalBarChart = (ctx, chartData) => {
         scales: {
             xAxes: [
                 {
-                    ticks: {
-                        beginAtZero: true,
-                    },
+                    ticks: { beginAtZero: true },
+                    gridLines: { drawOnChartArea: false },
                 },
             ],
+            yAxes: [{ gridLines: { drawOnChartArea: false } }],
         },
     }
-    return makeChart(ctx, 'horizontalBar', chartData, options)
+    const labels = chartData.labels
+    const dataset = {
+        data: chartData.data,
+        backgroundColor: backgrounds,
+        borderWidth: 1,
+    }
+    return makeChart(ctx, 'horizontalBar', labels, dataset, options)
 }
 
 const lineChart = (ctx, chartData) => {
@@ -68,28 +86,30 @@ const lineChart = (ctx, chartData) => {
         scales: {
             xAxes: [
                 {
-                    ticks: {
-                        beginAtZero: true,
-                    },
+                    ticks: { beginAtZero: true },
+                    gridLines: { drawOnChartArea: false },
                 },
             ],
+            yAxes: [{ gridLines: { drawOnChartArea: false } }],
         },
     }
-    return makeChart(ctx, 'line', chartData, options)
+    const labels = chartData.labels
+    const dataset = {
+        data: chartData.data,
+        backgroundColor: backgrounds[3],
+        borderWidth: 3,
+        borderColor: backgrounds[3],
+        fill: false,
+    }
+    return makeChart(ctx, 'line', labels, dataset, options)
 }
 
-function makeChart(ctx, type, chartData, options) {
+function makeChart(ctx, type, label, dataset, options) {
     return new Chart(ctx, {
         type: type,
         data: {
-            labels: chartData.labels,
-            datasets: [
-                {
-                    data: chartData.data,
-                    backgroundColor: backgrounds,
-                    borderWidth: 1,
-                },
-            ],
+            labels: label,
+            datasets: [dataset],
         },
         options: options,
     })
