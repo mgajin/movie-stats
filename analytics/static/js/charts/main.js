@@ -8,6 +8,8 @@ export function getChart(ctx, type, chartData) {
             return horizontalBarChart(ctx, chartData)
         case 'verticalBar':
             return verticalBarChart(ctx, chartData)
+        case 'line':
+            return lineChart(ctx, chartData)
     }
 }
 
@@ -55,6 +57,25 @@ const horizontalBarChart = (ctx, chartData) => {
         },
     }
     return makeChart(ctx, 'horizontalBar', chartData, options)
+}
+
+const lineChart = (ctx, chartData) => {
+    const options = {
+        legend: {
+            display: false,
+        },
+        fill: false,
+        scales: {
+            xAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true,
+                    },
+                },
+            ],
+        },
+    }
+    return makeChart(ctx, 'line', chartData, options)
 }
 
 function makeChart(ctx, type, chartData, options) {

@@ -3,15 +3,20 @@ import { getChart } from './main.js'
 $(document).ready(() => init())
 
 function init() {
-    ajax('/charts/months', dateChart)
+    ajax('/charts/years', yearsChart)
+    ajax('/charts/months', monthsChart)
     ajax('/charts/genres', genresChart)
     ajax('/charts/genres/avg', avgRatingsChart)
     ajax('/charts/imdb?sorted=True', topRatedChart)
 }
 
-function dateChart(response) {
+function yearsChart(response) {
+    const chart = getChart(context('yearsChart'), 'line', getData(response))
+}
+
+function monthsChart(response) {
     const chart = getChart(
-        context('releasedChart'),
+        context('monthsChart'),
         'verticalBar',
         getData(response)
     )

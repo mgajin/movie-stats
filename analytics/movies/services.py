@@ -45,7 +45,7 @@ class MovieService():
         return self.__response(months, data.tolist())
 
     def years_data(self):
-        years = np.arange(2010, 2020)
+        years = np.arange(2010, 2021)
         data = np.arange(len(years))
         data.fill(0)
         for i in range(len(years)):
