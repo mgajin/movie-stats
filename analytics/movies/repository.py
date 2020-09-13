@@ -18,8 +18,12 @@ class MovieRepo():
 
     def by_released_date(self, month, year):
         movies = self.get_movies()
-        filtered = filter(lambda movie: self.__released(
-            movie, month, year), movies)
+        filtered = self.__filter_by_date(movies, month, year)
+        return list(filtered)
+
+    def by_year(self, year):
+        movies = self.get_movies()
+        filtered = filter(lambda movie: self.__year(movie, year), movies)
         return list(filtered)
 
     def get_movie(self, title):
@@ -29,8 +33,14 @@ class MovieRepo():
     def get_genres(self):
         return self.genres
 
-    def __imdb_rating(self, movie):
-        return movie['imdbRating']
+    def __filter_by_date(self, movies, month, year):
+        return filter(lambda movie: self.__released(movie, month, year), movies)
 
     def __released(self, movie, month, year):
         return month in movie['released'] and year in movie['released']
+
+    def __year(self, movie, year):
+        return str(year) in movie['released']
+
+    def __imdb_rating(self, movie):
+        return movie['imdbRating']

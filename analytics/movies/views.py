@@ -33,6 +33,12 @@ class RatingsChartView(View):
         return JsonResponse(chart_data)
 
 
+class YearsChartView(View):
+    def get(self, request):
+        chart_data = service.years_data()
+        return JsonResponse(chart_data)
+
+
 class MonthsChartView(View):
     def get(self, request):
         form = YearFilter(request.GET)

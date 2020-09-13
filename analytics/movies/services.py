@@ -44,6 +44,15 @@ class MovieService():
             data[i] = len(movies)
         return self.__response(months, data.tolist())
 
+    def years_data(self):
+        years = np.arange(2010, 2020)
+        data = np.arange(len(years))
+        data.fill(0)
+        for i in range(len(years)):
+            movies = self.repository.by_year(years[i])
+            data[i] = len(movies)
+        return self.__response(years.tolist(), data.tolist())
+
     def get_movies(self, filter={}):
         return self.repository.get_movies(filter)
 
