@@ -16,9 +16,10 @@ class MovieRepo():
         movies = self.get_movies(filter)
         return sorted(movies, key=self.__imdb_rating, reverse=True)
 
-    def movies_by_month(self, month):
+    def by_released_date(self, month, year):
         movies = self.get_movies()
-        filtered = filter(lambda movie: self.__month(movie, month), movies)
+        filtered = filter(lambda movie: self.__released(
+            movie, month, year), movies)
         return list(filtered)
 
     def get_movie(self, title):
@@ -31,5 +32,5 @@ class MovieRepo():
     def __imdb_rating(self, movie):
         return movie['imdbRating']
 
-    def __month(self, movie, month):
-        return month in movie['released']
+    def __released(self, movie, month, year):
+        return month in movie['released'] and year in movie['released']

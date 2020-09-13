@@ -35,12 +35,12 @@ class MovieService():
             data[i] = avg
         return self.__response(genres, data.tolist())
 
-    def months_data(self):
+    def months_data(self, year=''):
         months = calendar.month_name[1:]
         data = np.arange(len(months))
         data.fill(0)
         for i in range(len(months)):
-            movies = self.repository.movies_by_month(months[i][:3])
+            movies = self.repository.by_released_date(months[i][:3], year)
             data[i] = len(movies)
         return self.__response(months, data.tolist())
 

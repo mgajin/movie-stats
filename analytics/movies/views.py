@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views import View
 from .services import MovieService
-from .forms import SearchMovie
+from .forms import SearchMovie, YearFilter
 
 service = MovieService()
 
@@ -35,7 +35,12 @@ class RatingsChartView(View):
 
 class MonthsChartView(View):
     def get(self, request):
-        chart_data = service.months_data()
+        form = YearFilter(request.GET)
+        if form.is_valid():
+            year = form.cleaned_data['year']
+        else:
+            year = ''
+        chart_data = service.months_data(year)
         return JsonResponse(chart_data)
 
 
