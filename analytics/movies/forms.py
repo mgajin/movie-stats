@@ -6,4 +6,4 @@ class SearchMovie(forms.Form):
 
 
 class YearFilter(forms.Form):
-    year = forms.CharField(label='Enter year', min_length=4, max_length=4)
+    year = forms.CharField(label='Year', min_length=4)

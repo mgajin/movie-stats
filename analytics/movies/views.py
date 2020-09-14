@@ -13,7 +13,8 @@ class HomeView(View):
         genres = service.get_genres()
         context = {
             'total_movies': len(movies),
-            'total_genres': len(genres['labels'])
+            'total_genres': len(genres['labels']),
+            'year_form': YearFilter()
         }
         return render(request, 'pages/index.html', context)
 

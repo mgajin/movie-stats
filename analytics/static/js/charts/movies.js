@@ -2,9 +2,16 @@ import { getChart } from './main.js'
 
 $(document).ready(() => init())
 
+$('#year-filter-form').submit((e) => {
+    e.preventDefault()
+    const q = $('#year-filter-form').serialize()
+    const url = `/charts/months?${q}`
+    ajax(url, monthsChart)
+})
+
 function init() {
     ajax('/charts/years', yearsChart)
-    ajax('/charts/months', monthsChart)
+    // ajax('/charts/months', monthsChart)
     ajax('/charts/genres', genresChart)
     ajax('/charts/genres/avg', avgRatingsChart)
     ajax('/charts/imdb?sorted=True', topRatedChart)

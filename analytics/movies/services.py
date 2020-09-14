@@ -40,7 +40,7 @@ class MovieService():
         data = np.arange(len(months))
         data.fill(0)
         for i in range(len(months)):
-            movies = self.repository.by_released_date(months[i][:3], year)
+            movies = self.repository.get_by_month(months[i][:3], year)
             data[i] = len(movies)
         return self.__response(months, data.tolist())
 
@@ -49,7 +49,7 @@ class MovieService():
         data = np.arange(len(years))
         data.fill(0)
         for i in range(len(years)):
-            movies = self.repository.by_year(years[i])
+            movies = self.repository.get_by_year(years[i])
             data[i] = len(movies)
         return self.__response(years.tolist(), data.tolist())
 

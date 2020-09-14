@@ -1,13 +1,18 @@
-<div class="row">
-    <div class="col-12">
+{% load static %}
 
-    </div>
+<div class="row">
+    <div class="col-12"></div>
     <div class="col-12 p-2">
         <div class="card">
             <div class="card-body">
                 <canvas id="yearsChart" width="400" height="100"></canvas>
             </div>
         </div>
+    </div>
+    <div class="col-12 p-2">
+        <form method="GET" id="year-filter-form">
+            {{ year_form }}
+        </form>
     </div>
     <div class="col-12 p-2">
         <div class="card">
