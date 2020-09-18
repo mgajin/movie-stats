@@ -24,10 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'w$!f9#ii&ita71ut#6nipz3%5k^6mp7f9b+0m0o@7u^5m(q@wx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['movie-database-analytics.herokuapp.com', 'localhost']
-# 127.0.0.1
+ALLOWED_HOSTS = ['movie-database-analytics.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
@@ -44,7 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
