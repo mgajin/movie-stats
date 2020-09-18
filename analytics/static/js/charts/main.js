@@ -1,116 +1,72 @@
-import { backgrounds } from './constants.js'
+import { getChart } from './charts.js'
 
-export function getChart(ctx, type, chartData) {
-    switch (type) {
-        case 'pie':
-            return pieChart(ctx, chartData)
-        case 'horizontalBar':
-            return horizontalBarChart(ctx, chartData)
-        case 'verticalBar':
-            return verticalBarChart(ctx, chartData)
-        case 'line':
-            return lineChart(ctx, chartData)
-    }
+let monthsCanvas = null
+
+$(document).ready(() => init())
+
+$('#year-filter-form').submit((e) => {
+    e.preventDefault()
+    const q = $('#year-filter-form').serialize()
+    const url = `/charts/months?${q}`
+    ajax(url, monthsChart)
+})
+
+function init() {
+    ajax('/charts/years', yearsChart)
+    ajax('/charts/months', monthsChart)
+    ajax('/charts/genres', genresChart)
+    ajax('/charts/genres/avg', avgRatingsChart)
+    ajax('/charts/imdb?sorted=True', topRatedChart)
 }
 
-const pieChart = (ctx, chartData) => {
-    const options = {
-        legend: {
-            display: true,
-            position: 'right',
-        },
-    }
-    const labels = chartData.labels
-    const dataset = {
-        data: chartData.data,
-        backgroundColor: backgrounds,
-        borderWidth: 1,
-    }
-    return makeChart(ctx, 'pie', labels, dataset, options)
+function yearsChart(response) {
+    const chart = getChart(context('yearsChart'), 'line', getData(response))
 }
 
-const verticalBarChart = (ctx, chartData) => {
-    const options = {
-        legend: {
-            display: false,
-        },
-        scales: {
-            xAxes: [{ gridLines: { drawOnChartArea: false } }],
-            yAxes: [
-                {
-                    ticks: { beginAtZero: true },
-                    gridLines: { drawOnChartArea: false },
-                },
-            ],
-        },
+function monthsChart(response) {
+    if (monthsCanvas) {
+        monthsCanvas.destroy()
     }
-    const labels = chartData.labels
-    const dataset = {
-        data: chartData.data,
-        backgroundColor: backgrounds,
-        borderWidth: 1,
-    }
-    return makeChart(ctx, 'bar', labels, dataset, options)
+    monthsCanvas = getChart(
+        context('monthsChart'),
+        'verticalBar',
+        getData(response)
+    )
 }
 
-const horizontalBarChart = (ctx, chartData) => {
-    const options = {
-        legend: {
-            display: false,
-        },
-        scales: {
-            xAxes: [
-                {
-                    ticks: { beginAtZero: true },
-                    gridLines: { drawOnChartArea: false },
-                },
-            ],
-            yAxes: [{ gridLines: { drawOnChartArea: false } }],
-        },
-    }
-    const labels = chartData.labels
-    const dataset = {
-        data: chartData.data,
-        backgroundColor: backgrounds,
-        borderWidth: 1,
-    }
-    return makeChart(ctx, 'horizontalBar', labels, dataset, options)
+function genresChart(response) {
+    const chart = getChart(context('genresChart'), 'pie', getData(response))
 }
 
-const lineChart = (ctx, chartData) => {
-    const options = {
-        legend: {
-            display: false,
-        },
-        fill: false,
-        scales: {
-            xAxes: [
-                {
-                    ticks: { beginAtZero: true },
-                    gridLines: { drawOnChartArea: false },
-                },
-            ],
-            yAxes: [{ gridLines: { drawOnChartArea: false } }],
-        },
-    }
-    const labels = chartData.labels
-    const dataset = {
-        data: chartData.data,
-        backgroundColor: backgrounds[3],
-        borderWidth: 3,
-        borderColor: backgrounds[3],
-        fill: false,
-    }
-    return makeChart(ctx, 'line', labels, dataset, options)
+const avgRatingsChart = (response) => {
+    const chart = getChart(
+        context('avgRatingsChart'),
+        'verticalBar',
+        getData(response)
+    )
 }
 
-function makeChart(ctx, type, label, dataset, options) {
-    return new Chart(ctx, {
-        type: type,
-        data: {
-            labels: label,
-            datasets: [dataset],
-        },
-        options: options,
+const topRatedChart = (response) => {
+    const chart = getChart(
+        context('ratingsChart'),
+        'horizontalBar',
+        getData(response)
+    )
+}
+
+const ajax = (endpoint, func) => {
+    $.ajax({
+        method: 'GET',
+        url: endpoint,
+        success: (response) => func(response),
+        error: (error) => alert(error.message),
     })
+}
+
+const getData = (response) => {
+    return { data: response.data, labels: response.labels }
+}
+
+const context = (id) => {
+    return document.getElementById(id).getContext('2d')
 }

@@ -4,9 +4,7 @@
     <div class="row">
         <div class="col-12 col-lg-4 p-2">
             <div class="card" style="height: 100%">
-                <div
-                    class="card-body d-flex flex-column align-items-center justify-content-center"
-                >
+                <div class="card-body d-flex flex-column align-items-center justify-content-center">
                     <div class="card-title">
                         <h2>Movies</h2>
                     </div>
@@ -26,18 +24,46 @@
         <div class="col-12 col-md-6 col-lg-4 p-2">
             <div class="card">
                 <div class="card-body">
-                    <canvas
-                        id="avgRatingsChart"
-                        width="400"
-                        height="400"
-                    ></canvas>
+                    <canvas id="avgRatingsChart" width="400" height="400"></canvas>
                 </div>
             </div>
         </div>
     </div>
-    {% include 'partials/chart_tabs.html' %}
+
+    <div class="row">
+        <div class="col-12 p-2">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="yearsChart" width="400" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 p-2">
+            <form method="GET" id="year-filter-form">
+                {{ year_form }}
+                <button type="submit" class="btn btn-dark">Submit</button>
+            </form>
+        </div>
+        <div class="col-12 col-md-8 p-2">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="monthsChart" width="300" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 p-2">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="ratingsChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %} {% block javascript %}
-<script type="module" src="{% static '/js/charts/movies.js' %}"></script>
+<script type="module" src="{% static '/js/charts/main.js' %}"></script>
 {% endblock %}
